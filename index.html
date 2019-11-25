@@ -1,5 +1,113 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> 
+<html> 
 <body> 
-Some baseball description 
+
+<h1> Baseball Simulation </h1> 
+<p> Created in January and February of 2019 as Part 1 of a sport simulation project. <a href = "https://github.com/maturanamateo/baseball">GitHub Link</a></p> 
+<hr> 
+<h2>Methodology</h2>
+This was created in the 2019 Pre-Season so I used combined WAR (Wins Above Replacement) of teams and added 150 to that value in order to create and adjusted "ranking". The reason 150 was added is because, due to the nature of WAR, some teams will have negative WAR, and I needed some kind of way to implement a compete method between two teams.
+<p><strong>Implementation of Compete method</strong></p>
+The following code is in the <code>Team.java </code> file. 
+<pre> 
+<code> 
+  public void compete(Team rival) {
+    double result = (Math.random()*(this.ranking + rival.ranking));
+    if (result < ranking ) {
+      this.wins++;
+      rival.losses++;
+      this.ranking += .2;
+      rival.ranking += -.2;
+    }
+    else {
+      this.losses++;
+      rival.wins++;
+      this.ranking += -.2;
+      rival.ranking +=.2;
+    }
+  }
+</code>
+</pre>
+Here, the ranking instance variable is exactly what is described above (WAR + 150). A random number is generated within the range from 0 to the sum of the two team rankings. Then, if this random number is less than the current team's ranking, then they are awarded the win. Otherwise, they are awarded the loss. Each game, a team's ranking is adjusted by <span>&#177;</span>.2 to allow for mid season shifts in ability. Given the compete method, pre-season the Yankees would have a 54% chance of beating the Twins in any individual game. 
+<p><strong>Implementation of Season Class</strong></p>
+In the MLB, each time is assigned a league and a division. There are 2 leagues, and each league has 3 divisions, each with 5 teams. Each team plays 19 games against every other team in their division (76 total), 6/7 games against each of the other 10 opponents in their league but not their division (66 total), and 20 inter-league games. Division and League games were easy to program because they just required looping through and doing some randomization. However, for inter-league play, I had to develop 6 different schedules and then randomly pick one from those. This is because of the existence of rival teams and some teams have multiple rivals which rotate by season. 
+<p><strong>Future Improvements + Criticism</strong></p>
+<p><u>Home Field Advantage</u></p> 
+One aspect of baseball which is not implemented in my program is the existence of home field advantage. Home field advantage is certainly present in baseball, especially so in the postseason. Unfortunately, my program did not account for home field advantage, but this is an improvement I would want to make in the future. 
+<p><u>Win Streaks</u></p>
+As with home field advantage, win streaks have the potential to dramatically change a team's probability of winning any given game. Momentum is the driving factor here, and I am looking into a way to implement this in the future. 
+<p><strong>Example Output</strong></p>
+<table border = "1">
+<tr>
+  <th>AL East</th>
+  <th>AL Central</th>
+  <th>AL West</th> 
+  <th>NL East</th>
+  <th>NL Central</th>
+  <th>NL West</th>
+</tr>
+<tr>
+  <td>Yankees: 100-62</td>
+  <td>Indians: 89-73</td>
+  <td>Athletics: 98-64</td>
+  <td>Nationals: 93-69</td>
+  <td>Brewers: 93-69</td>
+  <td>Dodgers: 87-75</td>
+</tr>
+<tr>
+  <td>Rays: 92-70</td>
+  <td>Tigers: 80-82</td>
+  <td>Astros: 87-75</td>
+  <td>Braves: 87-75</td>
+  <td>Cubs: 87-75 </td>
+  <td>Giants: 80-82</td>
+</tr>
+<tr>
+  <td>Red Sox: 83-79</td>
+  <td>Twins: 79-83</td>
+  <td>Angels: 72-90</td>
+  <td>Mets: 85-77</td>
+  <td>Cardinals: 81-81 </td>
+  <td>Rockies: 79-83</td>
+</tr>
+<tr>
+  <td>Blue Jays: 81-81</td>
+  <td>Royals: 78-84</td>
+  <td>Rangers: 71-91</td>
+  <td>Marlins: 72-90</td>
+  <td>Pirates: 78-84</td>
+  <td>Diamondbacks: 78-84</td>
+</tr>
+<tr>
+  <td>Orioles: 63-99</td>
+  <td>White Sox: 75-87</td>
+  <td>Mariners: 69-93 </td>
+  <td>Phillies: 69-93</td>
+  <td>Reds: 76-86</td>
+  <td>Padres: 68-94</td>
+</tr>
+</table>
+AL Wild Card: Rays vs Astros <br>
+Astros Win 1-0 <br>
+NL Wild Card: Braves vs Cubs <br>
+Cubs Win 1-0 <br>
+<br>
+ALDS #1: Yankees vs Astros <br>
+Astros Win 3-0 <br>
+ALDS #2: Athletics vs Indians <br>
+Indians Win 3-1 <br>
+NLDS #1: Nationals vs Cubs <br>
+Nationals Win 3-2 <br>
+NLDS #2: Brewers vs Dodgers <br>
+Dodgers Win 3-2 <br>
+<br>
+ALCS: Astros vs Indians <br>
+Astros Win 4-2 <br>
+NLCS: Nationals vs Dodgers <br>
+Dodgers Win 4-1 <br>
+<br>
+World Series: Astros vs Dodgers <br>
+Astros Win 4-3 <br>
+<br>
+Astros Win the MLB Season!
 </html>
